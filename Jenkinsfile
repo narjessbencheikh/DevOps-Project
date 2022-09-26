@@ -1,27 +1,24 @@
 pipeline {
     agent any
     stages {
-        stage('git repo & clean') {
+        stage('Checkout Git') {
             steps {
-               bat "rmdir  /s /q TicketBookingServiceJunitTesting"
-                bat "git clone https://github.com/kishancs2020/TicketBookingServiceJunitTesting.git"
-                bat "mvn clean -f TicketBookingServiceJunitTesting"
+               echo 'Pulling...',
+               git branch : 'main',
+               url : 'https://github.com/narjessbencheikh/DevOps-Project'
             }
         }
-        stage('install') {
+
+        stage('Print') {
             steps {
-                bat "mvn install -f TicketBookingServiceJunitTesting"
+                script {
+                    def now = new Date()
+                    dateRelease = now.format("yyyy-MM-dd", TimeZone.getTimeZone('UTC'))
+                    echo "Current date ${dateRelease}."
+                }
             }
         }
-        stage('test') {
-            steps {
-                bat "mvn test -f TicketBookingServiceJunitTesting"
-            }
-        }
-        stage('package') {
-            steps {
-                bat "mvn package -f TicketBookingServiceJunitTesting"
-            }
-        }
+
+
+        
     }
-}
