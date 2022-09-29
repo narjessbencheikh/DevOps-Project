@@ -1,13 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout Git') {
-            steps {
-               echo 'Pulling...';
-               git branch : 'main',
-               url : 'https://github.com/narjessbencheikh/DevOps-Project';
-            }
-        }
 
         stage('Print') {
             steps {
